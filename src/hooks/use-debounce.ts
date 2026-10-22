@@ -1,0 +1,18 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+/**
+ * Returns `value` after it has stopped changing for `delay` milliseconds.
+ * Used to keep typing snappy while avoiding a request per keystroke.
+ */
+export function useDebounce<T>(value: T, delay = 400): T {
+  const [debounced, setDebounced] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDebounced(value), delay);
+    return () => window.clearTimeout(timer);
+  }, [value, delay]);
+
+  return debounced;
+}
